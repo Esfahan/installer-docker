@@ -17,5 +17,24 @@ echo '----------------'
 echo 'Install docker-ce'
 echo '----------------'
 sudo yum install -y docker-ce
-sudo systemctl start docker
-sudo systemctl enable docker
+
+echo '----------------'
+echo 'boot docker'
+echo '----------------'
+sudo systemctl status docker | grep running >/dev/null 2>&1
+if [ $? = 1 ]; then
+    sudo systemctl start docker
+else
+    echo 'already started.'
+fi
+
+echo '----------------'
+echo 'enable docker'
+echo '----------------'
+sudo systemctl status docker | grep enable >/dev/null 2>&1
+if [ $? = 1 ]; then
+    sudo systemctl enable docker
+else
+    echo 'already enabled.'
+fi
+
